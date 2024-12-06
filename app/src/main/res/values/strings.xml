@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">字体导入</string>
+    <string name="khmer_btn_name">导入高棉语字体</string>
+    <string name="thai_btn_name">导入泰语字体</string>
+    <string name="no_all_file_access_permission_text">请手动授予所有文件读写权限</string>
+    <string name="no_file_write_permission_text">未授予文件读写存储权限</string>
+</resources>
