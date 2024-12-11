@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WPS字体导入工具</string>
+    <string name="import_btn_name">导入</string>
+    <string name="no_file_access_permission_text">请手动授予所有文件读写权限</string>
+    <string name="success_text">导入成功</string>
+    <string name="no_permission_fail_text">导入失败，请手动授予所有文件读写权限</string>
+    <string name="unknown_fail_text">导入失败，请重启您的平板或卸载重装本工具重试</string>
+    <string name="need_choose_language">请选择一种语言</string>
+    <string-array name="language_arr">
+        <item>语言</item>
+        <item>高棉文</item>
+        <item>泰文</item>
+        <item>越南文</item>
+    </string-array>
+</resources>

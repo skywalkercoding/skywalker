@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,18 +33,44 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String THAI_DIR = "thai";
 
-    private static final String PC_ENGINE_FONT_DIR = "PCEngine/.fonts";
+    private static final String VIET_DIR = "viet";
+
+    private static final String PC_ENGINE_DIR = "PCEngine";
+
+    private static final String FONT_DIR = ".fonts";
 
     private static final int REQUEST_ID = 123321;
+
+    private static final int KHMER_INDEX = 1;
+
+    private static final int THAI_INDEX = 2;
+
+    private static final int VIET_INDEX = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button khmerBtn = findViewById(R.id.khmer_btn);
-        Button thaiBtn = findViewById(R.id.tai_btn);
-        khmerBtn.setOnClickListener(v -> importFont(KHMER_DIR));
-        thaiBtn.setOnClickListener(v -> importFont(THAI_DIR));
+        Spinner spinner = findViewById(R.id.spinner);
+        Button importBtn = findViewById(R.id.import_btn);
+        importBtn.setOnClickListener(v -> {
+            Log.i(TAG, "select index" + spinner.getSelectedItemPosition() + ", "
+                + spinner.getSelectedItem().toString());
+            switch (spinner.getSelectedItemPosition()) {
+                case KHMER_INDEX:
+                    importFont(KHMER_DIR);
+                    break;
+                case THAI_INDEX:
+                    importFont(THAI_DIR);
+                    break;
+                case VIET_INDEX:
+                    importFont(VIET_DIR);
+                    break;
+                default:
+                    Toast.makeText(this, R.string.need_choose_language, Toast.LENGTH_LONG).show();
+                    break;
+            }
+        });
     }
 
     @Override
@@ -57,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, R.string.no_file_write_permission_text, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.no_file_access_permission_text, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -65,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // R版本以上，需要手动授予所有文件访问权限
             if (!Environment.isExternalStorageManager()) {
-                Toast.makeText(this, R.string.no_all_file_access_permission_text, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.no_file_access_permission_text, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 intent.setData(Uri.parse("package:" + getPackageName()));
                 startActivity(intent);
@@ -82,20 +109,27 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!Environment.isExternalStorageManager()) {
                 Log.w(TAG, "have no all file access permission.");
-                Toast.makeText(this, R.string.no_all_file_access_permission_text, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.no_file_access_permission_text, Toast.LENGTH_LONG).show();
                 return;
             }
         } else {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 Log.w(TAG, "have no file write permission.");
-                Toast.makeText(this, R.string.no_file_write_permission_text, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.no_file_access_permission_text, Toast.LENGTH_LONG).show();
                 return;
             }
         }
 
-        File fontDir = new File(Environment.getExternalStorageDirectory(), PC_ENGINE_FONT_DIR);
+        File pcEngineDir = new File(Environment.getExternalStorageDirectory(), PC_ENGINE_DIR);
+        if (!pcEngineDir.exists() && !pcEngineDir.mkdir()) {
+            Log.w(TAG, "create pc engine dir failed.");
+            Toast.makeText(this, R.string.unknown_fail_text, Toast.LENGTH_LONG).show();
+            return;
+        }
+        File fontDir = new File(pcEngineDir, FONT_DIR);
         if (!fontDir.exists() && !fontDir.mkdir()) {
             Log.w(TAG, "create font dir failed.");
+            Toast.makeText(this, R.string.unknown_fail_text, Toast.LENGTH_LONG).show();
             return;
         }
         String[] fileNameArr = null;
@@ -103,10 +137,12 @@ public class MainActivity extends AppCompatActivity {
             fileNameArr = getAssets().list(folder);
         } catch (IOException e) {
             Log.w(TAG, "assets file list get error");
+            Toast.makeText(this, R.string.unknown_fail_text, Toast.LENGTH_LONG).show();
             return;
         }
         if (fileNameArr == null) {
             Log.w(TAG, "assets file not exist.");
+            Toast.makeText(this, R.string.unknown_fail_text, Toast.LENGTH_LONG).show();
             return;
         }
         for (String fileName : fileNameArr) {
@@ -121,5 +157,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "copy file failed.");
             }
         }
+        Toast.makeText(this, R.string.success_text, Toast.LENGTH_LONG).show();
     }
 }
