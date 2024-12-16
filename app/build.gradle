@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -15,9 +17,27 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file(project.findProperty("KEYSTORE_PATH") ?: "default_keystore_path")
+            storePassword project.findProperty("KEYSTORE_PASSWORD") ?: "default_store_password"
+            keyAlias project.findProperty("KEY_ALIAS") ?: "default_key_alias"
+            keyPassword project.findProperty("KEY_ALIAS_PASSWORD") ?: "default_key_password"
+        }
+    }
 
+    flavorDimensions "channel" // 定义风味维度
+    productFlavors {
+        uta {
+            dimension "channel" // 指定风味维度
+        }
+        pro {
+            dimension "channel" // 指定风味维度
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -26,7 +46,64 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    applicationVariants.all { variant ->
+
+        variant.outputs.all { output ->
+            def variantName = variant.name.capitalize() // 获取变种名称并首字母大写
+            def versionName
+            def versionCode
+            def channelName = variant.productFlavors[0].name // 获取当前风味（uta/pro）
+
+            // 根据变种名称设置 versionName 和 versionCode
+            if (variantName.contains("Release")) {
+                versionName = getVersionName(true)
+                versionCode = getVersionCode(true)
+            } else if (variantName.contains("Uat")) {
+                versionName = getVersionName(false)
+                versionCode = getVersionCode(false)
+            }
+
+            println("variantName -> ${variantName} -> ${versionName} -> ${versionCode}")
+
+            def apkDirectory = output.outputFile.parentFile
+            // 获取当前日期时间
+            def timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
+            // 是否签名
+            def isSigned = variant.signingConfig != null
+            def signedText = isSigned ? "signed" : "unsigned"
+
+            // 根据版本号、日期、风味、环境信息等生成 APK 文件名
+            def apkName = "font_${variantName}_${channelName}_v${versionName}_${timeStamp}_${signedText}.apk"
+
+            // 修改输出路径和文件名
+            output.outputFileName = new File(apkDirectory, apkName).name
+        }
+    }
 }
+
+
+
+
+// 获取版本名
+def getVersionName(boolean isRelease) {
+    if (isRelease) {
+        return project.hasProperty("releaseVersionName") ? project.releaseVersionName : "1.0"
+    } else {
+        String today = new Date().format("MMdd")
+        String time = new Date().format("HHmm")
+        return "${project.releaseVersionName}.$today.$time"
+    }
+}
+
+// 获取版本号
+def getVersionCode(boolean isRelease) {
+    if (isRelease) {
+        return project.hasProperty("appVersionCode") ? project.appVersionCode : 1000
+    } else {
+        return project.hasProperty("debugAppVersionCode") ? project.debugAppVersionCode : 1000
+    }
+}
+
 
 dependencies {
     implementation libs.appcompat
