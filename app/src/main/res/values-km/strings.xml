@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">កម្មវិធីបញ្ចូល WPS font</string>
+    <string name="import_btn_name">បញ្ចូល</string>
+    <string name="no_file_access_permission_text">សូមផ្តល់សិទ្ធិអនុញ្ញាត read &amp; write ឯកសារទាំងអស់។</string>
+    <string name="success_text">បញ្ចូលបានជោគជ័យ</string>
+    <string name="no_permission_fail_text">បញ្ចូលបានបរាជ័យ, សូមផ្តល់សិទ្ធិអនុញ្ញាត read &amp; writeឯកសារទាំងអស់។</string>
+    <string name="unknown_fail_text">បញ្ចូលបានបរាជ័យ, សូម restart ថេប្លេតរបស់អ្នក ឬ uninstall បន្ទាប់មក reinstall ម្តងទៀត។</string>
+    <string name="need_choose_language">សូមជ្រើសរើសភាសា</string>
+    <string-array name="language_arr">
+        <item>ភាសា</item>
+        <item>ភាសាខ្មែរ</item>
+        <item>ភាសាថៃ</item>
+        <item>ភាសាវៀតណាម</item>
+    </string-array>
+</resources>

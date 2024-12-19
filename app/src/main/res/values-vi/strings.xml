@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Công cụ nhập phông chữ cho WPS</string>
+    <string name="import_btn_name">Nhập</string>
+    <string name="no_file_access_permission_text">Vui lòng cấp quyền đọc và ghi cho tất cả các tệp một cách thủ công.</string>
+    <string name="success_text">Nhập thành công.</string>
+    <string name="no_permission_fail_text">Nhập không thành công. Vui lòng cấp quyền đọc và ghi cho tất cả các tệp một cách thủ công.</string>
+    <string name="unknown_fail_text">Nhập không thành công. Vui lòng khởi động lại máy tính bảng hoặc gỡ cài đặt và cài đặt lại công cụ.</string>
+    <string name="need_choose_language">Vui lòng chọn một ngôn ngữ</string>
+    <string-array name="language_arr">
+        <item>Ngôn ngữ</item>
+        <item>Tiếng Khmer</item>
+        <item>Tiếng Thái Lan</item>
+        <item>Tiếng Việt</item>
+    </string-array>
+</resources>

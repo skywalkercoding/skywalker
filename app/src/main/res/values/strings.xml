@@ -2,10 +2,10 @@
 <resources>
     <string name="app_name">WPS font import tool</string>
     <string name="import_btn_name">Import</string>
-    <string name="no_file_access_permission_text">Please manually grant read and write permissions to all files</string>
-    <string name="success_text">Import succeeded</string>
-    <string name="no_permission_fail_text">Import failed, Please manually grant read and write permissions to all files</string>
-    <string name="unknown_fail_text">Import failed, Please restart your tablet or uninstall and reinstall the tool</string>
+    <string name="no_file_access_permission_text">Please manually grant read and write permissions to all files.</string>
+    <string name="success_text"> Import succeeded.</string>
+    <string name="no_permission_fail_text">Import failed, Please manually grant read and write permissions to all files.</string>
+    <string name="unknown_fail_text">Import failed, Please restart your tablet or uninstall and reinstall the tool.</string>
     <string name="need_choose_language">Please choose a language</string>
     <string-array name="language_arr">
         <item>Language</item>

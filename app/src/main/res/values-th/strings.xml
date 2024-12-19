@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WPS font import tool</string>
+    <string name="import_btn_name">นำเข้า</string>
+    <string name="no_file_access_permission_text">กรุณาอนุญาตให้สิทธิ์ในการอ่านและเขียนไฟล์ทั้งหมด</string>
+    <string name="success_text">นำเข้าฟอนต์สำเร็จ</string>
+    <string name="no_permission_fail_text">นำเข้าฟอนต์ไม่สำเร็จ กรุณาอนุญาตให้สิทธิ์ในการอ่านและเขียนไฟล์ทั้งหมด</string>
+    <string name="unknown_fail_text">นำเข้าฟอนต์ไม่สำเร็จ กรุณารีสตาร์ทอุปกรณ์นี้ หรือ ถอนการติดตั้งและติดตั้งแอปใหม่อีกครั้ง</string>
+    <string name="need_choose_language">โปรดเลื่อกภาษา</string>
+    <string-array name="language_arr">
+        <item>ภาษา</item>
+        <item>กัมพูชา</item>
+        <item>ไทย</item>
+        <item>เวียดนาม</item>
+    </string-array>
+</resources>
